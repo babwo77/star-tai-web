@@ -1,9 +1,9 @@
-iimport { defineConfig } from 'vite'
+import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
   build: {
-    target: 'es2015', // iOS Safari 호환
+    target: 'es2015',
   },
 })
