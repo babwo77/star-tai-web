@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>star-tai</title>
+    <!-- ✅ 에러 잡기 -->
+    <script>
+      window.errors = [];
+      window.onerror = function(msg, url, line, col, error) {
+        window.errors.push(msg + ' at ' + line + ':' + col);
+        updateErrorLog();
+        return false;
+      };
+      window.onunhandledrejection = function(e) {
+        window.errors.push('Promise: ' + e.reason);
+        updateErrorLog();
+      };
+      function updateErrorLog() {
+        const el = document.getElementById('error-log');
+        if (el) el.textContent = window.errors.join('\n');
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- ✅ 에러 표시 영역 -->
+    <div id="error-log" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); color:#0f0; z-index:99999; overflow:auto; font-family:monospace; font-size:14px; padding:10px; display:none;"></div>
+    <script>
+      // 3초 후 에러 있으면 표시
+      setTimeout(() => {
+        if (window.errors.length > 0) {
+          document.getElementById('error-log').style.display = 'block';
+        }
+      }, 3000);
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
